@@ -65,8 +65,8 @@ class MainWindow(QtGui.QMainWindow):
     ##
     def UpdateComp(self):
 
-	SC.UpdateComps()
-	SC.UpdateComp2()
+	self.SC.UpdateComps()
+	self.SC.UpdateComp2()
 
     ##
     #アクションの作成の関数
