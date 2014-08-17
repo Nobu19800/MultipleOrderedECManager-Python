@@ -1,6 +1,12 @@
+# -*- coding: utf-8 -*-
+
 from PyQt4 import QtCore, QtGui
 from ExComp import CompLayout
 
+
+##
+#直列ブロック追加ボタンを含むウィジェット
+##
 class AddButton2(QtGui.QWidget):
     clicked = QtCore.pyqtSignal("CompLayout")
     def __init__(self, text, parent=None):
@@ -19,6 +25,9 @@ class AddButton2(QtGui.QWidget):
 
         self.setLayout(self.mainLayout)
 
+    ##
+    #ボタンクリック時に呼び出すスロット
+    ##
     def clickedSlot(self):
         print 1
         self.clicked.emit(self.Cl)

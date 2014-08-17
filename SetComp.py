@@ -7,6 +7,10 @@ import OpenRTM_aist
 import struct
 
 
+
+##
+#全実行順序のブロック表示ウィジェット
+##
 class SetComp(QtGui.QTabWidget):
     UpdateSizeSignal = QtCore.pyqtSignal("int","int")
     def __init__(self, ec, parent=None):
@@ -42,7 +46,9 @@ class SetComp(QtGui.QTabWidget):
 	if self.open(self.m_ec.FileName) == False:
             self.newFile()
 
-
+    ##
+    #実行順序の削除の関数
+    ##
     def DeleteComp(self, fc):
 
 	self.FCS.remove(fc)
@@ -54,7 +60,9 @@ class SetComp(QtGui.QTabWidget):
 	fc.cf.close()
 	fc.close()
 
-
+    ##
+    #実行順序追加のスロット
+    ##
     def CreateComp(self):
 
 	FC = FrameComp(self.m_ec, self)
@@ -75,7 +83,9 @@ class SetComp(QtGui.QTabWidget):
 
 	
 
-
+    ##
+    #ファイル読み込みスロット
+    ##
     def save(self, Name):
 
 	mR = []
@@ -96,7 +106,9 @@ class SetComp(QtGui.QTabWidget):
 	ofs2.close()
 	return True
 
-
+    ##
+    #ファイル保存のスロット
+    ##
     def UpdateComp2(self):
         
 
@@ -177,7 +189,9 @@ class SetComp(QtGui.QTabWidget):
 										
 						fd.ECS[k].CB.setCurrentIndex(l)
 
-
+    ##
+    #RTCが追加、削除されたときにブロック図に反映するスロット
+    ##
     def UpdateComps(self):
 
 	Size = self.m_ec.getCompNum()
@@ -255,7 +269,9 @@ class SetComp(QtGui.QTabWidget):
 
 	return True
 
-
+    ##
+    #実行しているRTCのブロックの色を変えるスロット
+    ##
     def UpdateEC(self):
 
 	for h in range(0, len(self.m_ec.rs)):
@@ -270,7 +286,9 @@ class SetComp(QtGui.QTabWidget):
 	self.UpdateComps()
 	
 
-
+    ##
+    #サイズ変更時に呼ばれるスロット
+    ##
     def UpdateSizeSlot(self):
          
 
@@ -302,19 +320,23 @@ class SetComp(QtGui.QTabWidget):
 
 	
 
-
+    
     def UpdateComp(self):
 
 	pass
 		    
 	
 
-
+    ##
+    #ボタンクリック時に呼び出すスロット
+    ##
     def UpdateRTC(self, rs):
 
 	self.FCS[0].UpdateRTC(rs)
 
-
+    ##
+    #初期化の関数
+    ##
     def newFile(self):
 
 	for i in range(0, len(self.FCS)):

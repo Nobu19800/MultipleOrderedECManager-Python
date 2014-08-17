@@ -3,6 +3,10 @@
 from PyQt4 import QtCore, QtGui
 from SetComp import SetComp
 
+
+##
+#メインウィンドウのウィジェット
+##
 class MainWindow(QtGui.QMainWindow):
     def __init__(self, ec):
         super(MainWindow, self).__init__()
@@ -49,15 +53,24 @@ class MainWindow(QtGui.QMainWindow):
 
         #self.widget.resize(400, 400)
 
+    ##
+    #サイズを変更するときに呼び出されるスロット
+    ##
     def m_resize(self, w, h):
 
 	self.widget.resize(w, h)
+
+    ##
+    #RTCが追加、削除されたときに呼び出されるスロット
+    ##
     def UpdateComp(self):
 
 	SC.UpdateComps()
 	SC.UpdateComp2()
 
-
+    ##
+    #アクションの作成の関数
+    ##
     def createAction(self):
 
 	self.newAct = QtGui.QAction("&New...",self)
@@ -76,7 +89,9 @@ class MainWindow(QtGui.QMainWindow):
         self.saveAct.triggered.connect(self.save)
         
 
-
+    ##
+    #メニューの作成の関数
+    ##
     def createMenus(self):
 
 	self.fileMenu = self.menuBar().addMenu("&File")
@@ -87,7 +102,9 @@ class MainWindow(QtGui.QMainWindow):
 
 
 
-
+    ##
+    #ファイル読み込みスロット
+    ##
     def open(self):
 
 	fileName = QtGui.QFileDialog.getOpenFileName(self,u"開く","","Config File (*.conf);;Python File (*.py);;All Files (*)")
@@ -97,7 +114,9 @@ class MainWindow(QtGui.QMainWindow):
 	self.SC.open(ba)
 
 
-
+    ##
+    #ファイル保存のスロット
+    ##
     def save(self):
 
 	fileName = QtGui.QFileDialog.getSaveFileName(self,u"保存", "","Config File (*.conf);;All Files (*)")
@@ -111,7 +130,9 @@ class MainWindow(QtGui.QMainWindow):
         return self.SC.save(ba)
 
 
-
+    ##
+    #初期化のスロット
+    ##
     def newFile(self):
 
 	self.SC.newFile()
@@ -120,7 +141,9 @@ class MainWindow(QtGui.QMainWindow):
     
 
 
-
+    ##
+    #実行順序をGUIに反映させる関数
+    ##
     def UpdateRTC(self,rs):
 
 	self.SC.UpdateRTC(rs)

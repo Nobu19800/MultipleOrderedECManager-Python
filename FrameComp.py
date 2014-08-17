@@ -13,6 +13,10 @@ import MultipleOrderedEC_rc
 
 import struct
 
+
+##
+#実行順序のブロックを表示するウィジェット
+##
 class FrameComp(QtGui.QWidget):
     UpdateSizeSignal = QtCore.pyqtSignal()
     def __init__(self, ec, sc, parent=None):
@@ -44,12 +48,17 @@ class FrameComp(QtGui.QWidget):
 	self.mBT = []
 	self.UB = []
 
+    ##
+    #このブロックを削除する関数
+    ##
     def DeleteFrame(self):
 
 	self.Sc.DeleteComp(self)
 
 
-
+    ##
+    #直列ブロックを追加するスロット
+    ##
     def AddCompSlot3(self, c):
 
 	AB2 = AddButton(u"追加")
@@ -129,35 +138,7 @@ class FrameComp(QtGui.QWidget):
 
 
 	self.UpdateSize()
-
 	
-
-	
-
-
-
-    def DeleteComp(self, Vl, c):
-
-	
-	c.subLayout.removeWidget(Vl)
-	Vl.close()
-
-	
-	
-        c.VL.remove(Vl.layout())
-        
-	
-	if len(c.VL) == 0 and len(self.Comps) > 1:
-            self.Comps.remove(c)
-	    self.mainLayout.removeWidget(c.mainWidget)
-
-	
-
-
-	self.UpdateSize()
-
-	
-
 
     def AddCompSlot2(self, c):
 
@@ -220,10 +201,50 @@ class FrameComp(QtGui.QWidget):
 
 	self.UpdateSize()
 
+    def AddComps2(self):
+
+	CL = CompLayout()
+	self.AddCompSlot2(CL)
+	self.Comps.append(CL)
+	self.mainLayout.addWidget(CL.mainWidget)
+
+	self.UpdateSize()
+	
+
 	
 
 
+    ##
+    #直列ブロックを削除するスロット
+    ##
+    def DeleteComp(self, Vl, c):
 
+	
+	c.subLayout.removeWidget(Vl)
+	Vl.close()
+
+	
+	
+        c.VL.remove(Vl.layout())
+        
+	
+	if len(c.VL) == 0 and len(self.Comps) > 1:
+            self.Comps.remove(c)
+	    self.mainLayout.removeWidget(c.mainWidget)
+
+	
+
+
+	self.UpdateSize()
+
+	
+
+
+    
+
+    ##
+    #サイズ変更の関数
+    ##
     def UpdateSize(self):
 
 	Ws = 0
@@ -257,31 +278,26 @@ class FrameComp(QtGui.QWidget):
 	for i in range(0, len(self.Comps)):
 	    self.Comps[i].Lb.setPixmap(QtGui.QPixmap(":/images/arrow.png").scaled(Ws*180,30))
 
-
+    ##
+    #並列ブロックを先頭に追加するスロット
+    ##
     def AddCompsT(self):
         self.InsertComps2(2)
 
 
 
-
+    ##
+    #並列ブロックをこのウィジェットの次に追加するスロット
+    ##
     def AddCompsU(self, c):
         t = self.mainLayout.indexOf(c.mainWidget)
 	self.InsertComps2(t+1)
 
 
-
-
-    def AddComps2(self):
-
-	CL = CompLayout()
-	self.AddCompSlot2(CL)
-	self.Comps.append(CL)
-	self.mainLayout.addWidget(CL.mainWidget)
-
-	self.UpdateSize()
-
 	
-
+    ##
+    #直列ブロックを指定位置に追加するスロット
+    ##
     def InsertComps2(self, num):
 
 	CL = CompLayout()
@@ -293,7 +309,9 @@ class FrameComp(QtGui.QWidget):
 	self.UpdateSize()
 
 	
-
+    ##
+    #並列ブロックの初期化の関数
+    ##
     def AddComp(self, FC):
 
 	EC = ExComp()
@@ -313,7 +331,9 @@ class FrameComp(QtGui.QWidget):
 
 	
 
-
+    ##
+    #並列ブロックの追加の関数
+    ##
     def InsertComp(self, num, FC):
 
 	EC = ExComp()
@@ -332,7 +352,9 @@ class FrameComp(QtGui.QWidget):
 
 	
 
-
+    ##
+    #RTCが追加、削除されたときにブロックに反映する関数
+    ##
     def UpdateComp2(self, rtclist, rtclist2):
 
 	for i in range(0,len(self.CLS)):
@@ -343,18 +365,24 @@ class FrameComp(QtGui.QWidget):
 
 
 
-
+    ##
+    #直列ブロックにブロック追加するスロット
+    ##
     def AddCompSlot(self, ec, fc):
         
 	self.InsertComp(fc.CL.indexOf(ec)+1, fc)
 
-
+    ##
+    #直列ブロックを追加するスロット
+    ##
     def AddCompSlot1(self, fc):
 
 	self.InsertComp(0, fc)
 
 
-
+    ##
+    #RTCが追加、削除されたときに実行条件に反映する関数
+    ##
     def SetFrame(self, mR):
 	r = len(mR.ar)
 	for i in range(0, r):
@@ -411,7 +439,9 @@ class FrameComp(QtGui.QWidget):
     
 
 
-
+    ##
+    #バイナリファイル保存の関数
+    ##
     def save(self, ofs2, mR):
 
 	rs = MPComp.main_Rule()
@@ -544,6 +574,9 @@ class FrameComp(QtGui.QWidget):
 
 
 
+    ##
+    #ブロックの色を変えるスロット
+    ##
     def UpdateEC(self, rs):
 	for i in range(0, len(rs)):
 
@@ -576,7 +609,9 @@ class FrameComp(QtGui.QWidget):
 	
 	
 
-
+    ##
+    #初期化の関数
+    ##
     def newFile(self):
 
 	for i in range(0, len(self.Comps)):

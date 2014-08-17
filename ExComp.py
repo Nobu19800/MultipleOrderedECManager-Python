@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
+
+
 from PyQt4 import QtCore, QtGui
 from FEComp import FEComp
 
+
+##
+#RTCのブロックのレイアウト
+##
 class CompLayout:
     def __init__(self):
         self.VL = []
@@ -12,6 +18,10 @@ class CompLayout:
         self.subWidget = None
         self.Lb = None
 
+
+##
+#RTCのブロックのウィジェット
+##
 class ExComp(QtGui.QWidget):
     AddCompSignal = QtCore.pyqtSignal("ExComp", "FEComp")
     def __init__(self, parent=None):
@@ -52,10 +62,15 @@ class ExComp(QtGui.QWidget):
 
         self.setLayout(self.mainLayout)
 
-
+    ##
+    #RTCを追加ボタンを押したときに呼び出されるスロット
+    ##
     def AddCompSlot(self):
 	self.AddCompSignal.emit(self, self.Fc)
 
+    ##
+    #RTCが追加、削除されたときに実行条件に反映する関数
+    ##
     def UpdateComp(self, rtclist, rtclist2):
 	Id = self.CB.currentIndex()
 	if Id <= 0:
@@ -69,7 +84,9 @@ class ExComp(QtGui.QWidget):
 	    self.CB.setCurrentIndex(Id)
 
 	
-
+    ##
+    #ブロックを削除したときに呼び出されるスロット
+    ##
     def DeleteComp(self):
         self.Fc.ECS.remove(self)
 	

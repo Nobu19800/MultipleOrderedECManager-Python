@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 from PyQt4 import QtCore, QtGui
 from FEComp import FEComp
 
-
+##
+#ブロック追加ボタンを含むウィジェット
+##
 class AddButton(QtGui.QWidget):
     clicked = QtCore.pyqtSignal("FEComp")
     def __init__(self, text, parent=None):
@@ -23,7 +27,9 @@ class AddButton(QtGui.QWidget):
 
         
         
-
+    ##
+    #ボタンクリック時に呼び出すスロット
+    ##
     def clickedSlot(self):
         print self.Fc
         self.clicked.emit(self.Fc)

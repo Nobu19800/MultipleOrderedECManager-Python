@@ -6,33 +6,47 @@ import sys
 import imp
 
 
+
+##
+#実行条件のクラス
+##
 class add_Rule:
     def __init__(self):
         self.state = -1
         self.name = ""
         self.r = None
-
+##
+#直列ブロックのクラス
+##
 class sub_Rule:
     def __init__(self):
         self.v = ""
         self.r = None
         self.s = 0
-
+##
+#並列ブロックのクラス
+##
 class Rule:
     def __init__(self):
         self.SR = []
-
+##
+#実行順序のクラス
+##
 class main_Rule:
     def __init__(self):
         self.rs = []
         self.ar = []
-
+##
+#バイナリファイルより文字読み込みする関数
+##
 def ReadString(ifs):
     s = struct.unpack("i",ifs.read(4))[0]
     a = ifs.read(s)
 
     return a
-
+##
+#バイナリファイルに文字保存する関数
+##
 def WriteString(a, ofs):
     
     a2 = a + "\0"
@@ -42,7 +56,9 @@ def WriteString(a, ofs):
     ofs.write(d)
     
     ofs.write(a2)
-
+##
+#テキストファイルからの実行順序読み込む関数
+##
 def LoadSRule(cs, nm, r):
     
     flag = True
@@ -173,7 +189,9 @@ def LoadSubRule(cs, nm, sr):
             flag = False;
 	    return nm
 
-
+##
+#ファイルより実行順序の読み込む関数
+##
 def LoadMainRule(rs, fName):
 
     root, ext = os.path.splitext(fName)

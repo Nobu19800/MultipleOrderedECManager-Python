@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: euc-jp -*-
+# -*- coding: utf-8 -*-
 
 
 
@@ -12,7 +12,9 @@ from MPTask import MPTask,GUITask
 import MPComp
 
 
-
+##
+#実行順序の設定ができる実行コンテキストクラス
+##
 class MultipleOrderedEC(OpenRTM_aist.PeriodicExecutionContext):
   
     def __init__(self):
@@ -35,7 +37,9 @@ class MultipleOrderedEC(OpenRTM_aist.PeriodicExecutionContext):
 
         self.nameList = []
         self.comp_t = []
-
+    ##
+    #rtc.confの設定を取得する関数
+    ##
     def getProperty(self, prop, key, value):
         
         if  prop.findNode(key) != None:
@@ -43,7 +47,9 @@ class MultipleOrderedEC(OpenRTM_aist.PeriodicExecutionContext):
             value = prop.getProperty(key)
         return value
           
-      
+    ##
+    #
+    ##
     def Update_Name(self):
         if self.comp_t == self._comps:
             pass
@@ -56,7 +62,9 @@ class MultipleOrderedEC(OpenRTM_aist.PeriodicExecutionContext):
                 self._comps[i].i_name = self._comps[i]._sm._obj.get_component_profile().instance_name
                 #self.nameList.append(self._comps[i]._sm._obj.get_component_profile().instance_name)
             del guard2
-
+    ##
+    #コンポーネントの名前取得の関数
+    ##
     def getCompName(self, num):
         
         self.Update_Name()
@@ -69,9 +77,15 @@ class MultipleOrderedEC(OpenRTM_aist.PeriodicExecutionContext):
         Name = self._comps[num].i_name
         return Name
 
+    ##
+    #コンポーネントの数取得の関数
+    ##
     def getCompNum(self):
         return len(self._comps)
 
+    ##
+    #コンポーネントのロジック実行の関数
+    ##
     def workerComp(self, c):
         sd = c.r in self._comps
         if sd == True:
@@ -83,11 +97,14 @@ class MultipleOrderedEC(OpenRTM_aist.PeriodicExecutionContext):
                 if c.v == self.getCompName(i):
                     c.r = self._comps[i]
                     self._comps[i]._sm.worker()
+
+    ##
+    #設定した実行順序のRTCを格納する関数
+    ##
     def LoadRules(self):
-        
         for h in range(0, len(self.rs)):
-	    for i in range(0, len(self.rs[h].ar)):
-		for j in range(0, len(self._comps)):
+            for i in range(0, len(self.rs[h].ar)):
+                for j in range(0, len(self._comps)):
                     
 		    #Name = self._comps[j]._sm._obj.get_component_profile().instance_name
 		    Name = self.getCompName(j)
@@ -104,7 +121,9 @@ class MultipleOrderedEC(OpenRTM_aist.PeriodicExecutionContext):
 			    if Name == self.rs[h].rs[i].SR[j][k].v:
 				self.rs[h].rs[i].SR[j][k].r = self._comps[l]
 	
-
+    ##
+    #GUIから実行順序の読み込みの関数
+    ##
     def LoadRuleGUI(self, RS_d):
         guard = OpenRTM_aist.ScopedLock(self._mutex_del)
 
@@ -115,7 +134,9 @@ class MultipleOrderedEC(OpenRTM_aist.PeriodicExecutionContext):
 
         del guard
   
-
+    ##
+    #ファイルから実行順序の読み込みの関数
+    ##
     def LoadRule(self):
 
 	  
@@ -134,7 +155,10 @@ class MultipleOrderedEC(OpenRTM_aist.PeriodicExecutionContext):
 	
 
 	del guard
-  
+
+    ##
+    #スレッド実行関数
+    ##
     def svc(self):
         self._rtcout.RTC_TRACE("svc()")
         flag = True

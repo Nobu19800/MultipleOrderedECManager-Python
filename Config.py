@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
+
 from PyQt4 import QtCore, QtGui
 
+##
+#実行条件の初期化の関数
+##
 def CrearLayout(lt):
     item = lt.takeAt( 1 )
     while ( item != None ):
 	item.widget().close()
 	item = lt.takeAt( 1 )
 
+##
+#実行条件のウィジェットに表示するRTCのクラス
+##
 class CompList:
     def __init__(self):
         self.name = None
@@ -19,6 +26,10 @@ class CompList:
 	self.Lo = None
 	self.Lw = None
 
+
+##
+#実行条件のウィジェット
+##
 class Configs(QtGui.QWidget):
     def __init__(self, parent=None):
         super(Configs, self).__init__(parent)
@@ -69,6 +80,9 @@ class Configs(QtGui.QWidget):
 
 	self.setLayout(self.mainLayout)
 
+    ##
+    #RTCが追加されたときに反映する関数
+    ##
     def addComp(self, name):
         self.cl = CompList()
 	self.cl.Name = name
@@ -97,7 +111,9 @@ class Configs(QtGui.QWidget):
 
 	self.Cl.append(self.cl)
         
-
+    ##
+    #初期化の関数
+    ##
     def resetComp(self):
         self.Cl = []
 	CrearLayout(self.Nlist)
